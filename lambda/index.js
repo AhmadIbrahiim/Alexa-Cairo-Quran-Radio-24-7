@@ -12,13 +12,24 @@ const LaunchRequestHandler = {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const speakOutput = 'Welcome to Cairo Quran Radio. Starting your spiritual journey now.';
+        const locale = handlerInput.requestEnvelope.request.locale;
+        let speakOutput, title, subtitle;
+        
+        if (locale === 'ar-EG') {
+            speakOutput = 'أهلاً وسهلاً بك في إذاعة القرآن الكريم من القاهرة. هذه الإذاعة الحبيبة رافقت أجيال من المؤمنين لعقود طويلة. الآن، أينما كنت، يمكنك الاستماع إلى أصوات الوطن المقدسة. دع التلاوات المباركة من القاهرة تملأ قلبك مرة أخرى.';
+            title = 'راديو القرآن الكريم من القاهرة';
+            subtitle = 'تلاوة القرآن الكريم من القاهرة';
+        } else {
+            speakOutput = 'Welcome to إذاعة القرآن الكريم من القاهرة - Cairo Quran Radio. For decades, this beloved station has been the spiritual companion of millions across Egypt and the Arab world. Now, wherever you are, you can reconnect with the sacred sounds of home. Let the timeless recitations from Cairo fill your heart once again.';
+            title = 'Cairo Quran Radio 24/7';
+            subtitle = 'Holy Quran Recitation from Cairo';
+        }
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
             .addAudioPlayerPlayDirective('REPLACE_ALL', STREAM_URL, 'cairo-quran-radio-stream', 0, null, {
-                title: 'Cairo Quran Radio 24/7',
-                subtitle: 'Holy Quran Recitation from Cairo',
+                title: title,
+                subtitle: subtitle,
                 art: {
                     sources: [{
                         url: 'https://via.placeholder.com/512x512/1e3a8a/ffffff?text=Cairo+Quran+Radio'
@@ -69,11 +80,20 @@ const HelpIntentHandler = {
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.HelpIntent';
     },
     handle(handlerInput) {
-        const speakOutput = 'This is Cairo Quran Radio 24/7. You can say "play" to start listening, "pause" to pause, or "stop" to stop the radio. The radio will start playing automatically when you open the skill.';
+        const locale = handlerInput.requestEnvelope.request.locale;
+        let speakOutput, repromptText;
+        
+        if (locale === 'ar-EG') {
+            speakOutput = 'هذه إذاعة القرآن الكريم من القاهرة - الصوت الذي تردد في البيوت المصرية لأجيال. يمكنك قول "شغل" لبدء الاستماع، أو "توقف" لإيقاف الراديو، أو "استمر" لمتابعة الاستماع. تماماً مثل أيام الراديو القديمة في القاهرة، تبدأ الإذاعة تلقائياً عند فتح المهارة. بارك الله فيك وجعل هذه التلاوات المباركة تملأ قلبك سكينة وذكرى الوطن.';
+            repromptText = 'ماذا تريد أن تفعل؟';
+        } else {
+            speakOutput = 'This is إذاعة القرآن الكريم من القاهرة - the voice that has echoed through Egyptian homes for generations. You can say "play" to start listening, "pause" to pause, or "stop" to stop. Just like the old radio days in Cairo, the station starts automatically when you tune in. May these blessed recitations bring you peace and memories of home.';
+            repromptText = 'What would you like to do?';
+        }
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
-            .reprompt('What would you like to do?')
+            .reprompt(repromptText)
             .getResponse();
     }
 };
@@ -85,7 +105,14 @@ const CancelAndStopIntentHandler = {
                 || Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.StopIntent');
     },
     handle(handlerInput) {
-        const speakOutput = 'May peace be with you. Cairo Quran Radio is now stopped.';
+        const locale = handlerInput.requestEnvelope.request.locale;
+        let speakOutput;
+        
+        if (locale === 'ar-EG') {
+            speakOutput = 'بارك الله فيك وجعل في ميزان حسناتك. إلى اللقاء، إذاعة القرآن الكريم من القاهرة تودعك. ستبقى الإذاعة هنا دائماً، في انتظار عودتك إلى أصوات الوطن.';
+        } else {
+            speakOutput = 'May Allah bless you. Until we meet again, إذاعة القرآن الكريم من القاهرة bids you farewell. The station will always be here, ready to welcome you back home.';
+        }
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
