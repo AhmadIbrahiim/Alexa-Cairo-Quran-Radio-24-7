@@ -33,6 +33,21 @@
         {
           "name": "AMAZON.FallbackIntent",
           "samples": []
+        },
+        {
+          "name": "PlayRadioIntent",
+          "samples": [
+            "play cairo quran radio",
+            "start the radio",
+            "turn on the radio",
+            "play the quran radio",
+            "start cairo radio",
+            "play quran from cairo",
+            "listen to cairo quran",
+            "start quran recitation",
+            "play islamic radio",
+            "turn on quran radio"
+          ]
         }
       ],
       "types": [],

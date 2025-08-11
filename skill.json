@@ -36,11 +36,11 @@
       "isAvailableWorldwide": true,
       "locales": {
         "en-US": {
-          "description": "Listen to Cairo Quran Radio 24/7 - bringing the beloved Egyptian Quran radio station to listeners worldwide. Enjoy continuous recitation of the Holy Quran from Cairo, perfect for Egyptians abroad who miss this cherished radio station.",
+          "description": "Relive the nostalgia of إذاعة القرآن الكريم من القاهرة - Cairo Quran Radio 24/7. For decades, this treasured station has been the spiritual heartbeat of Egyptian homes, awakening families for Fajr and accompanying them throughout the day. Now, wherever life has taken you, reconnect with the sacred voices that raised generations of believers. Perfect for Egyptians abroad who long for the comfort of home and the blessed recitations that echo through the streets of Cairo.",
           "examplePhrases": ["Alexa open Cairo Quran Radio", "Alexa Cairo Quran Radio", "Alexa ask Cairo Quran Radio to play", "Alexa tell Cairo Quran Radio to pause"],
           "keywords": [],
           "name": "Cairo Quran Radio 24/7",
-          "summary": "Listen to Cairo Quran Radio 24/7 with continuous Holy Quran recitation from Egypt."
+          "summary": "إذاعة القرآن الكريم من القاهرة - Bringing the nostalgic sounds of home to Egyptians worldwide."
         }
       },
       "testingInstructions": "Sample Testing Instructions."

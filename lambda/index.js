@@ -33,7 +33,8 @@ const PlayStreamIntentHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
             && (Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.PlaybackAction<object@MusicCreativeWork>' ||
-                Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.ResumeIntent');
+                Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.ResumeIntent' ||
+                Alexa.getIntentName(handlerInput.requestEnvelope) === 'PlayRadioIntent');
     },
     handle(handlerInput) {
         return handlerInput.responseBuilder
