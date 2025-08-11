@@ -5,31 +5,59 @@
  * */
 const Alexa = require('ask-sdk-core');
 
+const STREAM_URL = 'https://n09.radiojar.com/8s5u5tpdtwzuv?rj-ttl=5&rj-tok=AAABmJg84xkAfrrubGMK19tuiA';
+
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const speakOutput = 'Welcome, you can say Hello or Help. Which would you like to try?';
+        const speakOutput = 'Welcome to Cairo Quran Radio. Starting your spiritual journey now.';
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
-            .reprompt(speakOutput)
+            .addAudioPlayerPlayDirective('REPLACE_ALL', STREAM_URL, 'cairo-quran-radio-stream', 0, null, {
+                title: 'Cairo Quran Radio 24/7',
+                subtitle: 'Holy Quran Recitation from Cairo',
+                art: {
+                    sources: [{
+                        url: 'https://via.placeholder.com/512x512/1e3a8a/ffffff?text=Cairo+Quran+Radio'
+                    }]
+                }
+            })
             .getResponse();
     }
 };
 
-const HelloWorldIntentHandler = {
+const PlayStreamIntentHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'HelloWorldIntent';
+            && (Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.PlaybackAction<object@MusicCreativeWork>' ||
+                Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.ResumeIntent');
     },
     handle(handlerInput) {
-        const speakOutput = 'Hello World!';
-
         return handlerInput.responseBuilder
-            .speak(speakOutput)
-            //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
+            .addAudioPlayerPlayDirective('REPLACE_ALL', STREAM_URL, 'cairo-quran-radio-stream', 0, null, {
+                title: 'Cairo Quran Radio 24/7',
+                subtitle: 'Holy Quran Recitation from Cairo',
+                art: {
+                    sources: [{
+                        url: 'https://via.placeholder.com/512x512/1e3a8a/ffffff?text=Cairo+Quran+Radio'
+                    }]
+                }
+            })
+            .getResponse();
+    }
+};
+
+const PauseStreamIntentHandler = {
+    canHandle(handlerInput) {
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
+            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.PauseIntent';
+    },
+    handle(handlerInput) {
+        return handlerInput.responseBuilder
+            .addAudioPlayerStopDirective()
             .getResponse();
     }
 };
@@ -40,11 +68,11 @@ const HelpIntentHandler = {
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.HelpIntent';
     },
     handle(handlerInput) {
-        const speakOutput = 'You can say hello to me! How can I help?';
+        const speakOutput = 'This is Cairo Quran Radio 24/7. You can say "play" to start listening, "pause" to pause, or "stop" to stop the radio. The radio will start playing automatically when you open the skill.';
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
-            .reprompt(speakOutput)
+            .reprompt('What would you like to do?')
             .getResponse();
     }
 };
@@ -56,10 +84,11 @@ const CancelAndStopIntentHandler = {
                 || Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.StopIntent');
     },
     handle(handlerInput) {
-        const speakOutput = 'Goodbye!';
+        const speakOutput = 'May peace be with you. Cairo Quran Radio is now stopped.';
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
+            .addAudioPlayerStopDirective()
             .getResponse();
     }
 };
@@ -87,6 +116,38 @@ const FallbackIntentHandler = {
  * session is closed for one of the following reasons: 1) The user says "exit" or "quit". 2) The user does not 
  * respond or says something that does not match an intent defined in your voice model. 3) An error occurs 
  * */
+const AudioPlayerEventHandler = {
+    canHandle(handlerInput) {
+        return handlerInput.requestEnvelope.request.type.startsWith('AudioPlayer.');
+    },
+    handle(handlerInput) {
+        const { requestEnvelope } = handlerInput;
+        const audioPlayerEventName = requestEnvelope.request.type.substring('AudioPlayer.'.length);
+        
+        console.log(`AudioPlayer event: ${audioPlayerEventName}`);
+        
+        switch (audioPlayerEventName) {
+            case 'PlaybackStarted':
+                console.log('Playback started');
+                break;
+            case 'PlaybackFinished':
+                console.log('Playback finished');
+                break;
+            case 'PlaybackStopped':
+                console.log('Playback stopped');
+                break;
+            case 'PlaybackFailed':
+                console.log('Playback failed');
+                console.log(requestEnvelope.request.error);
+                break;
+            default:
+                break;
+        }
+        
+        return handlerInput.responseBuilder.getResponse();
+    }
+};
+
 const SessionEndedRequestHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'SessionEndedRequest';
@@ -144,13 +205,15 @@ const ErrorHandler = {
 exports.handler = Alexa.SkillBuilders.custom()
     .addRequestHandlers(
         LaunchRequestHandler,
-        HelloWorldIntentHandler,
+        PlayStreamIntentHandler,
+        PauseStreamIntentHandler,
         HelpIntentHandler,
         CancelAndStopIntentHandler,
         FallbackIntentHandler,
+        AudioPlayerEventHandler,
         SessionEndedRequestHandler,
         IntentReflectorHandler)
     .addErrorHandlers(
         ErrorHandler)
-    .withCustomUserAgent('sample/hello-world/v1.2')
+    .withCustomUserAgent('cairo-quran-radio/v1.0')
     .lambda();

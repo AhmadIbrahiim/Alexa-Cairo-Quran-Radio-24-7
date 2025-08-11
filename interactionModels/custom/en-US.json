@@ -15,17 +15,16 @@
           "samples": []
         },
         {
-          "slots": [],
-          "name": "HelloWorldIntent",
-          "samples": [
-            "hello",
-            "how are you",
-            "say hi world",
-            "say hi",
-            "hi",
-            "say hello world",
-            "say hello"
-          ]
+          "name": "AMAZON.PlaybackAction<object@MusicCreativeWork>",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.PauseIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.ResumeIntent",
+          "samples": []
         },
         {
           "name": "AMAZON.NavigateHomeIntent",
@@ -37,7 +36,7 @@
         }
       ],
       "types": [],
-      "invocationName": "change me"
+      "invocationName": "cairo quran radio"
     }
   }
 }

@@ -5,7 +5,11 @@
         "endpoint": {
           "uri": "arn:aws:lambda:us-east-1:114506207459:function:41d8d8f0-5eed-412e-8ebe-a2dc954c7a77:Release_0"
         },
-        "interfaces": [],
+        "interfaces": [
+          {
+            "type": "AUDIO_PLAYER"
+          }
+        ],
         "locales": {},
         "regions": {
           "NA": {
@@ -32,15 +36,11 @@
       "isAvailableWorldwide": true,
       "locales": {
         "en-US": {
-          "description": "Sample Full Description",
-          "examplePhrases": [
-            "Alexa open hello world",
-            "hello",
-            "help"
-          ],
+          "description": "Listen to Cairo Quran Radio 24/7 - bringing the beloved Egyptian Quran radio station to listeners worldwide. Enjoy continuous recitation of the Holy Quran from Cairo, perfect for Egyptians abroad who miss this cherished radio station.",
+          "examplePhrases": ["Alexa open Cairo Quran Radio", "Alexa Cairo Quran Radio", "Alexa ask Cairo Quran Radio to play", "Alexa tell Cairo Quran Radio to pause"],
           "keywords": [],
           "name": "Cairo Quran Radio 24/7",
-          "summary": "Sample Short Description"
+          "summary": "Listen to Cairo Quran Radio 24/7 with continuous Holy Quran recitation from Egypt."
         }
       },
       "testingInstructions": "Sample Testing Instructions."
