@@ -1,6 +1,7 @@
 {
   "interactionModel": {
     "languageModel": {
+      "invocationName": "cairo quran radio",
       "intents": [
         {
           "name": "AMAZON.CancelIntent",
@@ -36,6 +37,7 @@
         },
         {
           "name": "PlayRadioIntent",
+          "slots": [],
           "samples": [
             "play cairo quran radio",
             "start the radio",
@@ -50,8 +52,7 @@
           ]
         }
       ],
-      "types": [],
-      "invocationName": "cairo quran radio"
+      "types": []
     }
   }
 }
